@@ -7,6 +7,11 @@
             "SamMakesCode\\DummyUsers\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "Sam Littler",
@@ -16,5 +21,8 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=8.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^13.1"
     }
 }
