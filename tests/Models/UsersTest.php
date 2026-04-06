@@ -4,7 +4,7 @@ namespace Tests\Models;
 
 use Faker\Factory;
 use PHPUnit\Framework\TestCase;
-use SamMakesCode\DummyUsers\Models\User;
+use SamMakesCode\DummyJSON\Models\User;
 
 class UsersTest extends TestCase
 {

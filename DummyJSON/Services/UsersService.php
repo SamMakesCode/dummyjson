@@ -1,11 +1,11 @@
 <?php
 
-namespace SamMakesCode\DummyUsers\Services;
+namespace SamMakesCode\DummyJSON\Services;
 
 use GuzzleHttp\Client;
 use InvalidArgumentException;
-use SamMakesCode\DummyUsers\Exceptions\ModelNotFoundException;
-use SamMakesCode\DummyUsers\Models\User;
+use SamMakesCode\DummyJSON\Exceptions\ModelNotFoundException;
+use SamMakesCode\DummyJSON\Models\User;
 
 class UsersService
 {

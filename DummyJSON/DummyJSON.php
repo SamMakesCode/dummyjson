@@ -1,8 +1,8 @@
 <?php
 
-namespace SamMakesCode\DummyUsers;
+namespace SamMakesCode\DummyJSON;
 
-class DummyUsers
+class DummyJSON
 {
     public function __construct(
 

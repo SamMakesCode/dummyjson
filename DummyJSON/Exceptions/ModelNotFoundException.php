@@ -1,6 +1,6 @@
 <?php
 
-namespace SamMakesCode\DummyUsers\Exceptions;
+namespace SamMakesCode\DummyJSON\Exceptions;
 
 use Exception;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace SamMakesCode\DummyUsers\Models;
+namespace SamMakesCode\DummyJSON\Models;
 
 use JsonSerializable;
 

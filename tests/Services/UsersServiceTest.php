@@ -8,9 +8,9 @@ use GuzzleHttp\Psr7\Response;
 use InvalidArgumentException;
 use Mockery;
 use PHPUnit\Framework\TestCase;
-use SamMakesCode\DummyUsers\Exceptions\ModelNotFoundException;
-use SamMakesCode\DummyUsers\Models\User;
-use SamMakesCode\DummyUsers\Services\UsersService;
+use SamMakesCode\DummyJSON\Exceptions\ModelNotFoundException;
+use SamMakesCode\DummyJSON\Models\User;
+use SamMakesCode\DummyJSON\Services\UsersService;
 
 class UsersServiceTest extends TestCase
 {
