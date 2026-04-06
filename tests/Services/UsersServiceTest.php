@@ -81,7 +81,7 @@ class UsersServiceTest extends TestCase
                 'email' => $faker->email,
             ];
         }
-        $response = new Response(200, [], json_encode($users));
+        $response = new Response(200, [], json_encode(['users' => $users]));
         $clientMock = Mockery::mock(Client::class);
         $clientMock->expects('get')
             ->once()

@@ -43,7 +43,7 @@ class UsersService
         $data = json_decode($body, true);
         $users = array_map(function ($user) {
             return $this->hydrateModelWithData($user);
-        }, $data);
+        }, $data['users']);
         return $users;
     }
 
