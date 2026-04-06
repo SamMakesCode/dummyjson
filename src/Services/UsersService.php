@@ -3,6 +3,7 @@
 namespace SamMakesCode\DummyJSON\Services;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use InvalidArgumentException;
 use SamMakesCode\DummyJSON\Exceptions\ModelNotFoundException;
 use SamMakesCode\DummyJSON\Models\User;
@@ -19,10 +20,14 @@ class UsersService
             throw new InvalidArgumentException('Invalid user ID.');
         }
 
-        $response = $this->client->get('users/' . $id);
+        try {
+            $response = $this->client->get('users/' . $id);
+        } catch (ClientException $clientException) {
+            if ($clientException->getResponse()->getStatusCode() === 404) {
+                throw new ModelNotFoundException('No user with that ID exists.', 0, $clientException);
+            }
 
-        if ($response->getStatusCode() === 400) {
-            throw new ModelNotFoundException('No user with that ID exists.');
+            throw $clientException;
         }
 
         $body = $response->getBody()->getContents();
@@ -53,11 +58,11 @@ class UsersService
         string $email,
     ): int {
         $response = $this->client->post('users/add', [
-            'json' => json_encode([
+            'json' => [
                 'firstName' => $firstName,
                 'lastName' => $lastName,
                 'email' => $email,
-            ]),
+            ],
         ]);
 
         $contents = $response->getBody()->getContents();

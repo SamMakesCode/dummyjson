@@ -4,6 +4,8 @@ namespace Tests\Services;
 
 use Faker\Factory;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use InvalidArgumentException;
 use Mockery;
@@ -57,11 +59,15 @@ class UsersServiceTest extends TestCase
 
     public function testCanGetByIdThrowsException(): void
     {
-        $response = new Response(400);
+        $clientException = new ClientException(
+            '404',
+            new Request('get', 'users/1'),
+            new Response(404)
+        );
         $clientMock = Mockery::mock(Client::class);
         $clientMock->expects('get')
             ->once()
-            ->andReturn($response);
+            ->andThrow($clientException);
 
         $this->expectException(ModelNotFoundException::class);
 
