@@ -2,7 +2,9 @@
 
 namespace SamMakesCode\DummyUsers\Models;
 
-readonly class User
+use JsonSerializable;
+
+readonly class User implements JsonSerializable
 {
     public function __construct(
         public int $id,
@@ -10,4 +12,14 @@ readonly class User
         public string $lastName,
         public string $email,
     ) {}
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'firstName' => $this->firstName,
+            'lastName' => $this->lastName,
+            'email' => $this->email,
+        ];
+    }
 }
