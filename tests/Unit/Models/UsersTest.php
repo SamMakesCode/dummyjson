@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Models;
+namespace Tests\Unit\Models;
 
 use Faker\Factory;
 use PHPUnit\Framework\TestCase;

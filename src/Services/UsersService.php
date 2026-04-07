@@ -4,15 +4,31 @@ namespace SamMakesCode\DummyJSON\Services;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\GuzzleException;
 use InvalidArgumentException;
 use SamMakesCode\DummyJSON\Exceptions\ModelNotFoundException;
 use SamMakesCode\DummyJSON\Models\User;
 
-class UsersService
+readonly class UsersService
 {
     public function __construct(
         private Client $client,
     ) {}
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function extractSingle(string $bodyContents): array
+    {
+        $data = (array)json_decode($bodyContents, true);
+
+        return [
+            'id' => $data['id'],
+            'firstName' => $data['firstName'],
+            'lastName' => $data['lastName'],
+            'email' => $data['email'],
+        ];
+    }
 
     public function getById(int $id): User
     {
@@ -30,25 +46,34 @@ class UsersService
             throw $clientException;
         }
 
-        $body = $response->getBody()->getContents();
-        $data = json_decode($body, true);
-        return $this->hydrateModelWithData($data);
+        return $this->hydrateModelWithData(
+            $this->extractSingle(
+                $response
+                    ->getBody()
+                    ->getContents(),
+            ),
+        );
     }
 
+    /**
+     * @return array<User>
+     * @throws GuzzleException
+     */
     public function getPage(int $page = 1, int $perPage = 25): array
     {
+        $uriTemplate = 'users?limit=%s&skip=%s';
+
         $limit = $perPage;
         $skip = ($page - 1) * $limit;
-
-        $uriTemplate = 'users?limit=%s&skip=%s';
         $uri = sprintf($uriTemplate, $limit, $skip);
 
         $response = $this->client->get($uri);
         $body = $response->getBody()->getContents();
-        $data = json_decode($body, true);
-        $users = array_map(function ($user) {
-            return $this->hydrateModelWithData($user);
-        }, $data['users']);
+        $data = (array)json_decode($body, true);
+        $users = [];
+        foreach ($data['users'] as $datum) {
+            $users[] = $this->hydrateModelWithData($datum);
+        }
         return $users;
     }
 
@@ -66,10 +91,13 @@ class UsersService
         ]);
 
         $contents = $response->getBody()->getContents();
-        $data = json_decode($contents, true);
+        $data = (array)json_decode($contents, true);
         return $this->hydrateModelWithData($data)->id;
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     private function hydrateModelWithData(array $data): User
     {
         return new User(

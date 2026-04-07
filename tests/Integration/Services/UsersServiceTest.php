@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Services;
+namespace Tests\Integration\Services;
 
 use Faker\Factory;
 use GuzzleHttp\Client;

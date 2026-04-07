@@ -13,6 +13,9 @@ readonly class User implements JsonSerializable
         public string $email,
     ) {}
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return [
