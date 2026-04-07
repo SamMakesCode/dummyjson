@@ -30,6 +30,9 @@ readonly class UsersService
         ];
     }
 
+    /**
+     * Retrieve a single user using an ID
+     */
     public function getById(int $id): User
     {
         if ($id <= 0) {
@@ -56,6 +59,7 @@ readonly class UsersService
     }
 
     /**
+     * Return a page of users
      * @return array<User>
      * @throws GuzzleException
      */
@@ -77,6 +81,11 @@ readonly class UsersService
         return $users;
     }
 
+    /**
+     * Create a user
+     *
+     * @throws GuzzleException
+     */
     public function create(
         string $firstName,
         string $lastName,
